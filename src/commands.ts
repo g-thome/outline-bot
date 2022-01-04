@@ -14,7 +14,7 @@ const outline = {
         try {
             await i.deferReply();
             const shortCode = await get(i.options.getString('link').trim());
-            await i.reply('https://outline.com/' + shortCode);
+            await i.editReply('https://outline.com/' + shortCode);
         } catch (_) {
             await i.reply('could not generate outline link');
         }
