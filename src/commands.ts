@@ -12,6 +12,7 @@ const outline = {
                 .setRequired(true)),
     async execute(i: CommandInteraction) {
         try {
+            await i.deferReply();
             const shortCode = await get(i.options.getString('link').trim());
             await i.reply('https://outline.com/' + shortCode);
         } catch (_) {
