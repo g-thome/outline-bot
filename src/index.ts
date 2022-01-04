@@ -1,6 +1,6 @@
 import { Client, Intents } from 'discord.js';
 import dotenv from 'dotenv';
-import { registerCommandsForGuild } from './slash';
+import { registerSlashCommands } from './slash';
 import { outline } from './commands';
 
 dotenv.config();
@@ -8,12 +8,9 @@ dotenv.config();
 // intents number https://ziad87.net/intents/
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
-client.once('ready', c => {
-    console.log('logged in as ', c.user.tag);
-
-    if (process.env.NODE_ENV === 'TEST') {
-        registerCommandsForGuild(process.env.CLIENT_ID, process.env.GUILD_ID)
-    }
+client.once('ready', async c => {
+	console.log('logged in as ', c.user.tag);
+	await registerSlashCommands();
 });
 
 client.on('interactionCreate', async interaction => {
