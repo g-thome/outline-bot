@@ -2,7 +2,7 @@ import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import { outline } from './commands';
 
-const endpoint = process.env.TEST
+const endpoint = process.env.NODE_ENV === 'TEST'
     ? Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID)
     : Routes.applicationCommands(process.env.CLIENT_ID);
 
@@ -11,8 +11,7 @@ async function registerSlashCommands() {
     try {
         console.log('refreshing slash commands');
         
-        await rest.put(endpoint,
-            { body: [outline.data.toJSON()] });
+        await rest.put(endpoint, { body: [outline.data.toJSON()] });
         
         console.log('slash commands updated!');
     } catch (e) {

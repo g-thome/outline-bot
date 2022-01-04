@@ -1,9 +1,6 @@
 import { Client, Intents } from 'discord.js';
-import dotenv from 'dotenv';
 import { registerSlashCommands } from './slash';
 import { outline } from './commands';
-
-dotenv.config();
 
 // intents number https://ziad87.net/intents/
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
