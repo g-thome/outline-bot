@@ -1,8 +1,8 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { CommandInteraction } from 'discord.js';
-import { get } from './request';
+import { outline } from './outline';
 
-const outline = {
+const slashOutline = {
     data: new SlashCommandBuilder()
         .setName('outline')
         .setDescription('Creates an outlined page out of a link')
@@ -11,14 +11,16 @@ const outline = {
                 .setDescription('the link to get outlined')
                 .setRequired(true)),
     async execute(i: CommandInteraction) {
-        try {
-            await i.deferReply();
-            const shortCode = await get(i.options.getString('link').trim());
-            await i.editReply('https://outline.com/' + shortCode);
-        } catch (_) {
-            await i.reply('could not generate outline link');
+        const link = i.options.getString('link').trim();
+        const url = await outline(link);
+        await i.deferReply();
+
+        if (!url) {
+            return await i.editReply('could not generate outline link');
         }
+
+        await i.editReply(url);
     }
 }
 
-export { outline }
+export { slashOutline }
