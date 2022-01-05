@@ -2,7 +2,7 @@ import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import { slashOutline } from './commands';
 
-const endpoint = process.env.NODE_ENV === 'TEST'
+const endpoint = process.env.NODE_ENV === 'LOCAL'
     ? Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID)
     : Routes.applicationCommands(process.env.CLIENT_ID);
 
