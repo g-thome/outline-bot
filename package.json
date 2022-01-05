@@ -7,7 +7,7 @@
     "build": "swc ./src -d build",
     "start": "npm run build && node -r dotenv/config ./build/index.js"
   },
-  "keywords": [],
+  "keywords": ["discord"],
   "author": "",
   "license": "ISC",
   "dependencies": {
