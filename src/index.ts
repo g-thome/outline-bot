@@ -24,20 +24,27 @@ client.on('interactionCreate', async interaction => {
 
 client.on('messageCreate', async m => {
 	const mentionsBot = m.mentions.has(client.user.id);
+
+	if (!mentionsBot) return;
+
 	const isReply = m.type === 'REPLY';
 
-	if (!isReply) {
-		return;
-	}
-	
-	const targetMessage = await m.channel.messages.fetch(m.reference.messageId);
-	const targetMessageLink = getLinkFromString(targetMessage.content);
-	if (!(isReply && mentionsBot && targetMessageLink)) {
+	if (isReply) {
+		const targetMessage = await m.channel.messages.fetch(m.reference.messageId);
+		const targetMessageLink = getLinkFromString(targetMessage.content);
+
+		if (!targetMessageLink) return;
+
+		const link = await outline(targetMessageLink);
+		link && await m.reply(link);
 		return;
 	}
 
-	const link = await outline(targetMessageLink);
+	const messageLink = getLinkFromString(m.content);
+
+	if (!messageLink) return;
 		
+	const link = await outline(messageLink);
 	link && await m.reply(link);
 })
 
